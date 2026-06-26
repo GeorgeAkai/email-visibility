@@ -232,7 +232,7 @@ function EmailCard({
         "hover:border-blue-500/25 hover:bg-[var(--bg-card-hover)]",
         isUnread && "ring-1 ring-inset",
       )}
-      style={isUnread ? { ringColor: "var(--border-strong)" } : {}}
+      style={isUnread ? { "--tw-ring-color": "var(--border-strong)" } as React.CSSProperties : {}}
       onClick={onOpen}
     >
       <div className="flex">
