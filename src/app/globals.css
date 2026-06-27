@@ -244,6 +244,12 @@ body {
   backdrop-filter: blur(4px);
 }
 
+/* ─── Logo mark ─── */
+/* Light mode: invert so black bg → white and white mark → dark */
+[data-theme="light"] .logo-mark {
+  filter: invert(1);
+}
+
 [data-theme="light"] .modal-backdrop {
   background: rgba(15, 23, 42, 0.45);
 }

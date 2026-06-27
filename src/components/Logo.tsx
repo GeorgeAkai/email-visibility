@@ -16,34 +16,15 @@ export function Logo({
   return (
     <Link href={href} className="group flex items-center gap-2.5">
       <div
-        className={cn(
-          iconSize,
-          "relative flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg shadow-blue-500/30 transition group-hover:shadow-blue-500/50",
-        )}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          className="h-[55%] w-[55%] text-white"
-          aria-hidden="true"
-        >
-          <path
-            d="M3 8l9 6 9-6M3 8v8a2 2 0 002 2h14a2 2 0 002-2V8M3 8l9-4 9 4"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 14v4"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            className="opacity-80"
-          />
-        </svg>
-        <div className="absolute inset-0 rounded-lg bg-blue-400/20 opacity-0 blur-md transition group-hover:opacity-100" />
-      </div>
+        className={cn(iconSize, "logo-mark shrink-0 rounded-lg transition group-hover:opacity-85")}
+        style={{
+          backgroundImage: "url('/logo.png')",
+          backgroundSize: "240%",
+          backgroundPosition: "50% 10%",
+          backgroundRepeat: "no-repeat",
+        }}
+        aria-hidden="true"
+      />
       {showText && (
         <span className={cn(textSize, "font-semibold tracking-tight")} style={{ color: "var(--text-primary)" }}>
           Mail<span className="text-blue-400">Scope</span>
