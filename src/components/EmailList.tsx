@@ -48,8 +48,9 @@ export function EmailList() {
     setLoading(true);
     setError(null);
     try {
+      // Never pass categoryId to the API — filter client-side so per-category
+      // counts stay accurate regardless of which category is selected.
       const params = new URLSearchParams();
-      if (categoryFilter !== "all") params.set("categoryId", categoryFilter);
       if (dayFilter !== "0") params.set("days", dayFilter);
       const url = `/api/emails${params.size ? `?${params}` : ""}`;
       const res = await fetch(url, { cache: "no-store" });
@@ -62,7 +63,7 @@ export function EmailList() {
     } finally {
       setLoading(false);
     }
-  }, [categoryFilter, dayFilter]);
+  }, [dayFilter]);
 
   useEffect(() => { loadEmails(); }, [loadEmails]);
 
@@ -96,7 +97,33 @@ export function EmailList() {
     );
   }
 
+  // Category filtering is done client-side so all per-category counts remain
+  // accurate when a time filter is also active.
+  const displayedEmails =
+    categoryFilter === "all"
+      ? emails
+      : emails.filter((e) => e.category?.id === categoryFilter);
+
   const unreadCount = emails.filter((e) => !e.readAt).length;
+
+  async function handleMarkAllRead() {
+    const unreadIds = displayedEmails.filter((e) => !e.readAt).map((e) => e.id);
+    if (unreadIds.length === 0) return;
+    await Promise.all(
+      unreadIds.map((id) =>
+        fetch(`/api/emails/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ markRead: true }),
+        }),
+      ),
+    );
+    setEmails((prev) =>
+      prev.map((e) =>
+        unreadIds.includes(e.id) ? { ...e, readAt: new Date().toISOString() } : e,
+      ),
+    );
+  }
 
   return (
     <div className="space-y-5">
@@ -130,18 +157,34 @@ export function EmailList() {
           })}
         </div>
 
-        <button
-          type="button"
-          onClick={handleSync}
-          disabled={syncing}
-          className="btn-primary flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm"
-        >
-          {syncing ? (
-            <><span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />Syncing…</>
-          ) : (
-            <><SyncIcon />Sync now</>
+        <div className="flex items-center gap-2">
+          {displayedEmails.some((e) => !e.readAt) && (
+            <button
+              type="button"
+              onClick={handleMarkAllRead}
+              className="rounded-xl px-4 py-2.5 text-sm font-medium transition"
+              style={{
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border)",
+                background: "var(--bg-elevated)",
+              }}
+            >
+              Mark all read
+            </button>
           )}
-        </button>
+          <button
+            type="button"
+            onClick={handleSync}
+            disabled={syncing}
+            className="btn-primary flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm"
+          >
+            {syncing ? (
+              <><span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />Syncing…</>
+            ) : (
+              <><SyncIcon />Sync now</>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Time filter */}
@@ -174,7 +217,7 @@ export function EmailList() {
         <div className="space-y-3">
           {[1, 2, 3, 4].map((i) => <div key={i} className="skeleton h-24 rounded-xl" />)}
         </div>
-      ) : emails.length === 0 ? (
+      ) : displayedEmails.length === 0 ? (
         <div className="glass flex flex-col items-center justify-center rounded-2xl border-dashed px-6 py-16 text-center">
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 ring-1 ring-blue-500/20">
             <InboxIcon />
@@ -188,7 +231,7 @@ export function EmailList() {
         </div>
       ) : (
         <ul className="space-y-2">
-          {emails.map((email) => (
+          {displayedEmails.map((email) => (
             <EmailCard
               key={email.id}
               email={email}
