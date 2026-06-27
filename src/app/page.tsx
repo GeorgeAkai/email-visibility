@@ -207,10 +207,10 @@ export default function HomePage() {
 }
 
 const MOCK_EMAILS = [
-  { cat: "Important", catColor: "text-blue-400 bg-blue-500/10 ring-blue-500/25", bar: "bg-blue-500", subject: "Interview invite — Senior Engineer @ Stripe", from: "recruiting@stripe.com", score: 5, unread: true },
-  { cat: "Tasks", catColor: "text-green-400 bg-green-500/10 ring-green-500/25", bar: "bg-green-500", subject: "Assignment 3 due Friday", from: "prof.johnson@university.edu", score: 4, unread: true },
+  { cat: "Important", catColor: "text-blue-400 bg-blue-500/10 ring-blue-500/25", bar: "bg-blue-500", subject: "View Your Latest Bank Statement -  Chase", from: "statements@chase.com", score: 5, unread: true },
+  { cat: "Tasks", catColor: "text-green-400 bg-green-500/10 ring-green-500/25", bar: "bg-green-500", subject: "CSCI 311 Coding Project due Friday", from: "prof.johnson@chicostate.edu", score: 4, unread: true },
   { cat: "Benign", catColor: "text-amber-400 bg-amber-500/10 ring-amber-500/25", bar: "bg-amber-500", subject: "Your application was received", from: "no-reply@company.io", score: 2, unread: false },
-  { cat: "Phishing", catColor: "text-red-400 bg-red-500/10 ring-red-500/25", bar: "bg-red-500", subject: "⚠️ Your account will be suspended — act now", from: "security@paypa1-alert.com", score: 1, unread: false },
+  { cat: "Phishing", catColor: "text-red-400 bg-red-500/10 ring-red-500/25", bar: "bg-red-500", subject: "⚠️ Your account will be suspended. Act now!", from: "security@paypa1-alert.com", score: 1, unread: false },
 ];
 
 function MockEmailRow({ cat, catColor, bar, subject, from, score, unread }: {

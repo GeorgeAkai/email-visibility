@@ -19,10 +19,9 @@ export function Logo({
         className={cn(iconSize, "logo-mark shrink-0 rounded-lg transition group-hover:opacity-85")}
         style={{
           backgroundImage: "url('/logo.png')",
-          backgroundSize: "contain",
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundColor: "black",
         }}
         aria-hidden="true"
       />
