@@ -237,10 +237,10 @@ function EmailCard({
     >
       <div className="flex">
         <div className={cn("w-1 shrink-0", colors.bar)} />
-        <div className="flex min-w-0 flex-1 flex-wrap items-start justify-between gap-4 p-4 sm:p-5">
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Unread dot */}
+        <div className="min-w-0 flex-1 p-4 sm:p-5">
+          {/* Badges row + date */}
+          <div className="flex min-w-0 items-start justify-between gap-2">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5">
               {isUnread && (
                 <span className="h-2 w-2 rounded-full bg-blue-500 shrink-0" title="Unread" />
               )}
@@ -256,37 +256,39 @@ function EmailCard({
                 </span>
               )}
             </div>
-            <h3 className={cn(
-              "mt-2 truncate font-medium group-hover:text-white transition",
-              isUnread ? "font-semibold" : "font-medium",
-            )}
-              style={{ color: "var(--text-primary)" }}>
-              {email.subject || "(no subject)"}
-            </h3>
-            <p className="mt-0.5 text-sm" style={{ color: "var(--text-muted)" }}>
-              {email.fromName ? (
-                <><span style={{ color: "var(--text-secondary)" }}>{email.fromName}</span><span className="mx-1.5 opacity-40">·</span></>
-              ) : null}
-              {email.fromAddress}
-            </p>
-            {email.snippet && (
-              <p className="mt-2 line-clamp-2 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                {email.snippet}
-              </p>
-            )}
+            <time className="shrink-0 whitespace-nowrap text-xs font-medium" style={{ color: "var(--text-muted)" }}>
+              {new Date(email.receivedAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+            </time>
           </div>
 
-          <div className="flex shrink-0 flex-col items-end gap-2.5" onClick={(e) => e.stopPropagation()}>
-            <time className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>
-              {new Date(email.receivedAt).toLocaleDateString(undefined, {
-                month: "short", day: "numeric",
-                hour: "numeric", minute: "2-digit",
-              })}
-            </time>
+          <h3
+            className={cn(
+              "mt-2 truncate transition group-hover:text-white",
+              isUnread ? "font-semibold" : "font-medium",
+            )}
+            style={{ color: "var(--text-primary)" }}
+          >
+            {email.subject || "(no subject)"}
+          </h3>
+
+          <p className="mt-0.5 truncate text-xs" style={{ color: "var(--text-muted)" }}>
+            {email.fromName ? (
+              <><span style={{ color: "var(--text-secondary)" }}>{email.fromName}</span><span className="mx-1 opacity-40">·</span></>
+            ) : null}
+            {email.fromAddress}
+          </p>
+
+          {email.snippet && (
+            <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed sm:text-sm" style={{ color: "var(--text-muted)" }}>
+              {email.snippet}
+            </p>
+          )}
+
+          <div className="mt-3 flex justify-end" onClick={(e) => e.stopPropagation()}>
             <select
               value={email.category?.id ?? ""}
               onChange={(e) => onRecategorize(email.id, e.target.value)}
-              className="input-dark cursor-pointer rounded-lg px-2.5 py-1.5 text-xs"
+              className="input-dark max-w-[160px] cursor-pointer rounded-lg px-2 py-1 text-xs"
             >
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{cat.name}</option>

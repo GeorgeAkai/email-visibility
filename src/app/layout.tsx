@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: "MailScope",
   description: "AI-powered Gmail triage — important emails first, junk out of the way.",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    apple: [{ url: "/logo.png" }],
   },
 };
 

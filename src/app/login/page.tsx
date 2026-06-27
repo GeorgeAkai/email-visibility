@@ -18,8 +18,8 @@ export default async function LoginPage() {
           <Logo href="/" size="lg" />
         </div>
         <div className="glass glow-blue-lg rounded-2xl p-8 text-center">
-          <h1 className="text-2xl font-semibold text-slate-100">Welcome back</h1>
-          <p className="mt-2 text-sm leading-relaxed text-slate-400">
+          <h1 className="text-2xl font-semibold" style={{ color: "var(--text-primary)" }}>Welcome back</h1>
+          <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Sign in with Google to connect your Gmail with read-only access and start
             triaging.
           </p>

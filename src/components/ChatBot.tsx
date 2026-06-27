@@ -80,7 +80,7 @@ export function ChatBot() {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-22 right-6 z-50 flex w-80 flex-col rounded-2xl border border-blue-500/20 bg-[#0a0f1c] shadow-2xl sm:w-96">
+        <div className="fixed bottom-22 right-4 z-50 flex w-[calc(100vw-2rem)] flex-col rounded-2xl border border-blue-500/20 bg-[#0a0f1c] shadow-2xl sm:right-6 sm:w-96">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-blue-500/15 px-4 py-3">
             <div>
